@@ -1,8 +1,6 @@
 namespace Test {    
     const TEST = new Initializer("Test");
 
-
-
     export let TestItem = Builders.buildItem("TestItem", useTestItem, controller.A);
     
     export function useTestItem() {

@@ -10,3 +10,11 @@ namespace Builders {
         return initalizer;
     }
 }
+
+namespace SpriteBuilders {
+    export function buildSprite(project: Initializer, img: Image, kind?: number): Sprite {
+        const builtSprite = sprites.create(img, kind);
+
+        return builtSprite;
+    }
+}
