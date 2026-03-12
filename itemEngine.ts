@@ -1,5 +1,5 @@
 class Item {
-    _name:string;
+    _name: string;
     _useFunction: Function;
     _inputAccessor: controller.Button;
 
@@ -20,20 +20,10 @@ class Item {
     get useFunction(): Function {
         return this._useFunction;
     }
-
-
-    run() {
-
-    }
 }
 
-
-
-
-
-
 class ItemEngine extends Engine {
-    _items:Item[];
+    _items: Item[];
     _heldItem: Item;
 
     constructor(items: Item[]) {
@@ -59,26 +49,31 @@ class ItemEngine extends Engine {
     }
 
     bootstrap(toHeldItem?: Item) {
-        for (let value of this.items) {
-            let btn = value.inputAccessor;
-            let event = value.useFunction;
-            let name = value.name;
-            
-            console.log("Registered: " + name);
+        try {
+            for (let value of this.items) {
+                let btn = value.inputAccessor;
+                let event = value.useFunction;
+                let name = value.name;
 
-            forever(function inputter() {
-                btn.onEvent(ControllerButtonEvent.Pressed, function() {
-                   event();
+                console.log("Registered: " + name);
+
+                forever(function inputter() {
+                    btn.onEvent(ControllerButtonEvent.Pressed, function () {
+                        event();
+                    });
                 });
-            });
-        }
+            }
 
-        if (toHeldItem != null) {
-            this.heldItem = toHeldItem;
-        } else {
-            this.heldItem = this.items.get(0);
-        }
+            if (toHeldItem != null) {
+                this.heldItem = toHeldItem;
+            } else {
+                this.heldItem = this.items.get(0);
+            }
 
-        console.log("Finalized Item Engine.");
+            console.log("Finalized Item Engine.");
+        } catch {
+            console.log("Failure to load Item Engine.");
+            control.fail("Failure to run game engine!");
+        }
     }
 }
