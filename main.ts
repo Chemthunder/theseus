@@ -5,3 +5,4 @@ Item system, with easy implementation of custom items.
 Logger system (similar to Fabric)
 */
 
+const Thesus = Builders.createProject(control.programName());

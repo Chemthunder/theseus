@@ -6,5 +6,10 @@ namespace Builders {
         return builtItem;
     }
 
-    
+    export function createProject(projectId: string): Initializer {
+        const initalizer = new Initializer(projectId);
+        initalizer.log("Project registered successfully!");
+
+        return initalizer;
+    }
 }
