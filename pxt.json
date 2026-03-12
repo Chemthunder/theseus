@@ -1,0 +1,27 @@
+{
+    "name": "Theseus",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "Accessor": "pub:37137-70277-32132-76013"
+    },
+    "files": [
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "GameEngines.ts",
+        "itemEngine.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "target": "4.0.10",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "tsprj",
+    "languageRestriction": "javascript-only"
+}
