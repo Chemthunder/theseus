@@ -26,12 +26,14 @@ class ItemEngine extends Engine {
     _items: Item[];
     _heldItem: Item;
     _isActive: boolean;
+    _init: Initializer;
 
-    constructor(items: Item[]) {
+    constructor(items: Item[], init: Initializer) {
         super(EngineType.STATISTIC);
 
         this._items = items;
         this._isActive = false;
+        this._init = init;
     }
 
     get items(): Item[] {
@@ -46,6 +48,10 @@ class ItemEngine extends Engine {
         return this._isActive;
     }
 
+    get init(): Initializer {
+        return this._init;
+    }
+
     set items(input: Item[]) {
         this.items = input;
     }
@@ -58,6 +64,10 @@ class ItemEngine extends Engine {
         this._isActive = input;
     }
 
+    set init(init: Initializer) {
+        this.init = init;
+    }
+
     getNext(): Item {
         let array = this.items;
 
@@ -65,21 +75,26 @@ class ItemEngine extends Engine {
             let val: number = array.indexOf(this.heldItem);
             return array.get(val + 1);
         } else {
-            console.log("Unable to get next value due to non-existent value.");
-            control.fail("Engine failure: ");
+            this.init.log("Unable to get next value due to non-existent value.", InfoType.ERR);
+            this.init.stop("Failed method call.");
         }
 
         return array.get(0);
     }
 
     bootstrap(toHeldItem?: Item) {
+        let proj = this.init;
+        let held = this.heldItem;
+        let items = this.items;
+        let activity = this.isActive;
+
         try {
-            for (let value of this.items) {
+            for (let value of items) {
                 let btn = value.inputAccessor;
                 let event = value.useFunction;
                 let name = value.name;
 
-                console.log("Registered: " + name);
+                proj.log("Registered: " + name, InfoType.INFO);
 
                 forever(function inputter() {
                     btn.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -89,20 +104,19 @@ class ItemEngine extends Engine {
             }
 
             if (toHeldItem != null) {
-                this.heldItem = toHeldItem;
-                console.log("Held item set to: " + toHeldItem.name);
+                held = toHeldItem;
+                proj.log("Held item set to: " + toHeldItem.name, InfoType.INFO);
             } else {
-                this.heldItem = this.items.get(0);
-                console.log("Held item empty, defaulting to first list value.");
+                held = items.get(0);
+                proj.log("Held item empty, defaulting to first list value.", InfoType.WARN);
             }
 
-            console.log("Finalized Item Engine.");
-            this.isActive = true;
+            proj.log("Finalized Item Engine.", InfoType.INFO);
+            activity = true;
         } catch {
-            console.log("Failure to load Item Engine.");
-            control.fail("Failure to run game engine!");
-            this.isActive = false;
+            proj.log("Failure to load Item Engine.", InfoType.ERR);
+            proj.stop("Item Engine failure")
+            activity = false;
         }
     }
 }
-

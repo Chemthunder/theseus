@@ -1,6 +1,6 @@
 {
     "name": "Theseus",
-    "description": "",
+    "description": "Attempts to bring PXT closer to the Fabric Ecosystem.",
     "dependencies": {
         "device": "*"
     },
@@ -12,7 +12,7 @@
         "itemEngine.ts",
         "Builders.ts",
         "GravityEngine.ts",
-        "LOGGER.ts"
+        "Initalizer.ts"
     ],
     "testFiles": [
         "test.ts"

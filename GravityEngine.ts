@@ -3,12 +3,15 @@ class GravityEngine extends Engine {
     _gx: number;
     _gy: number;
 
-    constructor(appliedSprites: Sprite[], gravX: number, gravY: number) {
+    _init: Initializer;
+
+    constructor(appliedSprites: Sprite[], gravX: number, gravY: number, init: Initializer) {
         super(EngineType.CONSTANT);
 
         this._applicableSprites = appliedSprites;
         this._gx = gravX;
         this._gy = gravY;
+        this._init = init;
     }
 
     get appliedSprites(): Sprite[] {
@@ -23,6 +26,10 @@ class GravityEngine extends Engine {
         return this._gy;
     }
 
+    get init(): Initializer {
+        return this._init;
+    }
+
     set appliedSprites(input: Sprite[]) {
         this.appliedSprites = input;
     }
@@ -35,6 +42,10 @@ class GravityEngine extends Engine {
         this.gravY = num;
     }
 
+    set init(init: Initializer) {
+        this.init = init;
+    }
+
     bootstrap() {
         let spr = this.appliedSprites;
         let gx = this.gravX;
@@ -44,7 +55,7 @@ class GravityEngine extends Engine {
             value.ay = gy;
             value.ax = gx;
 
-            console.log("GravityEngine registered for: " + value.toString());
+            this.init.log("GravityEngine registered for: " + value.toString());
         }
     }
 }

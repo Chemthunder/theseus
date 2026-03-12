@@ -13,6 +13,6 @@ namespace Test {
         TestItem
     ];
 
-    export let Engine = new ItemEngine(TestItems);
+    export let Engine = new ItemEngine(TestItems, TEST);
     Engine.bootstrap();
 }
