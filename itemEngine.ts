@@ -37,7 +37,7 @@ class ItemEngine extends Engine {
     }
 
     get heldItem(): Item {
-        return this.heldItem;
+        return this._heldItem;
     }
 
     set items(input: Item[]) {
@@ -45,7 +45,7 @@ class ItemEngine extends Engine {
     }
 
     set heldItem(input: Item) {
-        this.heldItem = input;
+        this._heldItem = input; //
     }
 
     bootstrap(toHeldItem?: Item) {
@@ -77,3 +77,18 @@ class ItemEngine extends Engine {
         }
     }
 }
+
+let testItem1 = new Item("test1", testLoad, controller.A);
+let testItem2 = new Item("test2", testLoad, controller.A);
+
+function testLoad() {
+
+}
+
+let items:Item[] = [
+    testItem1,
+    testItem2
+];
+
+let engine = new ItemEngine(items);
+engine.bootstrap();
