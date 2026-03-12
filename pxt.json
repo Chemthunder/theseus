@@ -2,15 +2,17 @@
     "name": "Theseus",
     "description": "",
     "dependencies": {
-        "device": "*",
-        "Accessor": "pub:37137-70277-32132-76013"
+        "device": "*"
     },
     "files": [
         "main.ts",
         "README.md",
         "assets.json",
         "GameEngines.ts",
-        "itemEngine.ts"
+        "itemEngine.ts",
+        "Builders.ts",
+        "GravityEngine.ts",
+        "LOGGER.ts"
     ],
     "testFiles": [
         "test.ts"

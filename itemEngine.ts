@@ -25,11 +25,13 @@ class Item {
 class ItemEngine extends Engine {
     _items: Item[];
     _heldItem: Item;
+    _isActive: boolean;
 
     constructor(items: Item[]) {
         super(EngineType.STATISTIC);
 
         this._items = items;
+        this._isActive = false;
     }
 
     get items(): Item[] {
@@ -40,12 +42,34 @@ class ItemEngine extends Engine {
         return this._heldItem;
     }
 
+    get isActive(): boolean {
+        return this._isActive;
+    }
+
     set items(input: Item[]) {
         this.items = input;
     }
 
     set heldItem(input: Item) {
-        this._heldItem = input; //
+        this._heldItem = input;
+    }
+
+    set isActive(input: boolean) {
+        this._isActive = input;
+    }
+
+    getNext(): Item {
+        let array = this.items;
+
+        if (array.length > 1) {
+            let val: number = array.indexOf(this.heldItem);
+            return array.get(val + 1);
+        } else {
+            console.log("Unable to get next value due to non-existent value.");
+            control.fail("Engine failure: ");
+        }
+
+        return array.get(0);
     }
 
     bootstrap(toHeldItem?: Item) {
@@ -66,29 +90,19 @@ class ItemEngine extends Engine {
 
             if (toHeldItem != null) {
                 this.heldItem = toHeldItem;
+                console.log("Held item set to: " + toHeldItem.name);
             } else {
                 this.heldItem = this.items.get(0);
+                console.log("Held item empty, defaulting to first list value.");
             }
 
             console.log("Finalized Item Engine.");
+            this.isActive = true;
         } catch {
             console.log("Failure to load Item Engine.");
             control.fail("Failure to run game engine!");
+            this.isActive = false;
         }
     }
 }
 
-let testItem1 = new Item("test1", testLoad, controller.A);
-let testItem2 = new Item("test2", testLoad, controller.A);
-
-function testLoad() {
-
-}
-
-let items:Item[] = [
-    testItem1,
-    testItem2
-];
-
-let engine = new ItemEngine(items);
-engine.bootstrap();
