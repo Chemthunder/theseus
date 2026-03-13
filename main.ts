@@ -1,1 +1,1 @@
-const Theseus = theseus.createProject(control.programName());
+const Theseus = theseus.createProject("Theseus");
