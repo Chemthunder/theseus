@@ -68,20 +68,6 @@ class ItemEngine extends Engine {
         this.init = init;
     }
 
-    getNext(): Item {
-        let array = this.items;
-
-        if (array.length > 1) {
-            let val: number = array.indexOf(this.heldItem);
-            return array.get(val + 1);
-        } else {
-            this.init.log("Unable to get next value due to non-existent value.", InfoType.ERR);
-            this.init.stop("Failed method call.");
-        }
-
-        return array.get(0);
-    }
-
     bootstrap(toHeldItem?: Item) {
         let proj = this.init;
         let held = this.heldItem;
@@ -89,6 +75,14 @@ class ItemEngine extends Engine {
         let activity = this.isActive;
 
         try {
+            if (toHeldItem != null) {
+                held = toHeldItem;
+                proj.log("Held item set to: " + toHeldItem.name, InfoType.INFO);
+            } else {
+                held = items.get(0);
+                proj.log("Held item empty, defaulting to first list value.", InfoType.WARN);
+            }
+
             for (let value of items) {
                 let btn = value.inputAccessor;
                 let event = value.useFunction;
@@ -97,18 +91,12 @@ class ItemEngine extends Engine {
                 proj.log("Registered: " + name, InfoType.INFO);
 
                 forever(function inputter() {
-                    btn.onEvent(ControllerButtonEvent.Pressed, function () {
-                        event();
-                    });
+                    if (held == value) {
+                        btn.onEvent(ControllerButtonEvent.Pressed, function () {
+                            event();
+                        });
+                    }
                 });
-            }
-
-            if (toHeldItem != null) {
-                held = toHeldItem;
-                proj.log("Held item set to: " + toHeldItem.name, InfoType.INFO);
-            } else {
-                held = items.get(0);
-                proj.log("Held item empty, defaulting to first list value.", InfoType.WARN);
             }
 
             proj.log("Finalized Item Engine.", InfoType.INFO);

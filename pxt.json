@@ -10,9 +10,9 @@
         "assets.json",
         "GameEngines.ts",
         "itemEngine.ts",
-        "Builders.ts",
         "GravityEngine.ts",
-        "Initalizer.ts"
+        "Initalizer.ts",
+        "documentation.ts"
     ],
     "testFiles": [
         "test.ts"

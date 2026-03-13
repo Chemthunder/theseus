@@ -20,32 +20,36 @@ class Initializer {
         this.projectId = str;
     }
 
+    private loggedProjectId(): string {
+        return "(" + this.projectId + ") ";
+    }
+
     log(contents: string, infoType?: InfoType) {
         if (infoType != null) {
             switch (infoType) {
                 case (InfoType.WARN): {
-                    console.warn("(" + this.projectId + ") " + contents + " [WARN]");
+                    console.warn(this.loggedProjectId() + contents + " [WARN]");
                     break;
                 }
                 case (InfoType.DEBUG): {
-                    console.debug("(" + this.projectId + ") " + contents + " [DEBUG]");
+                    console.debug(this.loggedProjectId() + contents + " [DEBUG]");
                     break;
                 }
                 case (InfoType.ERR): {
-                    console.error("(" + this.projectId + ") " + contents + " [ERROR]");
+                    console.error(this.loggedProjectId() + contents + " [ERROR]");
                     break;
                 }
                 case (InfoType.INFO): {
-                    console.log("(" + this.projectId + ") " + contents);
+                    console.log(this.loggedProjectId() + contents);
                     break;
                 }
                 default: {
-                    console.log("(" + this.projectId + ") " + contents);
+                    console.log(this.loggedProjectId() + contents);
                     break;
                 }
             }
         } else {
-            console.log("(" + this.projectId + ") " + contents);
+            console.log(this.loggedProjectId() + contents);
         }
     }
 
